@@ -1,0 +1,11 @@
+name: deep-learning-tutorials
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.8
+  - pip
+  - setuptools
+  - cudatoolkit=10.2
+  - pip:
+      - -e .
