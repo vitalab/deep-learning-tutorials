@@ -43,6 +43,10 @@ When you've launched JupyterLab's web interface, you can simply navigate to any 
 
 ## Available Tutorials
 
+### Representation Learning
+- [Basic Variational Autoencoders](tutorials/mnist-autoencoders.ipynb)
+- [Variational Autoencoders Applied to Cardiac MRI](tutorials/cardiac-mri-autoencoders.ipynb)
+
 
 ## How to Contribute
 If you want to contribute to the project, then you have to install development dependencies and pre-commit hooks, on

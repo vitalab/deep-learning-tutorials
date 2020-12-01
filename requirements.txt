@@ -5,3 +5,4 @@ torchvision
 tqdm
 numpy
 matplotlib
+holoviews[recommended]
