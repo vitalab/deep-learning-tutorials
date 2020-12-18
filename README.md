@@ -1,5 +1,5 @@
 # Deep Learning Tutorials
-
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Setup
 
@@ -22,7 +22,7 @@ pip install -e .
 
 
 ### Installing Jupyter Widgets
-To get some interactive features, e.g. progress bars, to display properly in JupyterLab, you also need to activate
+To get some interactive features, e.g. progress bars, to display properly in JupyterLab, you also need to install
 and/or activate the required widgets, by following the instructions below:
 ```shell script
 # Setup ipywidgets to work with JupyterLab
@@ -42,3 +42,16 @@ When you've launched JupyterLab's web interface, you can simply navigate to any 
 
 
 ## Available Tutorials
+
+
+## How to Contribute
+If you want to contribute to the project, then you have to install development dependencies and pre-commit hooks, on
+top of the basic setup for using the project, detailed [above](#setup). The pre-commit hooks are there to ensure that
+any code committed to the repository meets the project's format and quality standards.
+```shell script
+# Install development dependencies
+pip install -e .[dev]
+
+# Install pre-commit hooks
+pre-commit install
+```
