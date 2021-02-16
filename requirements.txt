@@ -1,3 +1,4 @@
+# Base requirements
 jupyterlab
 jupyter
 torch
@@ -6,3 +7,6 @@ tqdm
 numpy
 matplotlib
 holoviews[recommended]
+
+# cardiac-mri-autoencoders
+h5py
