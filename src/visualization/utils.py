@@ -5,7 +5,6 @@ import numpy as np
 from matplotlib.axes import Axes
 from torch import Tensor
 from torchvision.datasets import VisionDataset
-from torchvision.transforms import transforms
 
 
 def _hide_axis(ax: Axes, hide_ticks: bool = True, hide_ticklabels: bool = True) -> None:
@@ -21,29 +20,33 @@ def _hide_axis(ax: Axes, hide_ticks: bool = True, hide_ticklabels: bool = True) 
 
 def display_data_samples(
     data: Union[Tensor, Sequence[Tensor]],
-    reconstructions: Union[Tensor, Sequence[Tensor]] = None,
+    target: Union[Tensor, Sequence[Tensor]] = None,
 ) -> None:
-    to_pil = transforms.ToPILImage()
     num_samples = len(data)
-    fig, axes = plt.subplots(figsize=(20, 4), nrows=1 + bool(reconstructions is not None), ncols=num_samples)
+    fig, axes = plt.subplots(figsize=(20, 4), nrows=1 + bool(target is not None), ncols=num_samples)
 
-    for sample_idx in range(num_samples):
-        # Display original
-        ax = plt.subplot(2, num_samples, sample_idx + 1)
+    def _display_sample(sample: Tensor, ax_idx: int, sample_label: str) -> None:
+        ax = plt.subplot(2, num_samples, ax_idx)
         if ax.is_first_col():
-            ax.set_ylabel("image", size="xx-large")
-        plt.imshow(to_pil(data[sample_idx]))
+            ax.set_ylabel(sample_label, size="xx-large")
+        if sample.ndim == 3 and sample.shape[0] == 1:
+            sample = sample.squeeze(dim=0)
+        elif sample.ndim != 2:
+            raise RuntimeError(
+                "Can't display sample that is not 2D or channel+2D. The sample you're trying to display has the "
+                f"following shape: {sample.shape}."
+            )
+        plt.imshow(sample.detach().cpu().numpy())
         plt.gray()
         _hide_axis(ax)
 
-        if reconstructions is not None:
-            # Display reconstruction
-            ax = plt.subplot(2, num_samples, sample_idx + 1 + num_samples)
-            if ax.is_first_col():
-                ax.set_ylabel("reconstruction", size="xx-large")
-            plt.imshow(to_pil(reconstructions[sample_idx]))
-            plt.gray()
-            _hide_axis(ax)
+    for sample_idx in range(num_samples):
+        # Display data on the top row
+        _display_sample(data[sample_idx], sample_idx + 1, "data")
+
+        if target is not None:
+            # Display target on the bottom row
+            _display_sample(target[sample_idx], sample_idx + 1 + num_samples, "target")
 
     fig.tight_layout()
     plt.show()
@@ -53,11 +56,11 @@ def display_autoencoder_results(
     data: VisionDataset, reconstruction_fn: Callable[[Tensor], Tensor], num_samples: int = 10
 ) -> None:
     samples_indices = np.random.randint(len(data), size=num_samples)
-    imgs, reconstructions = [], []
+    inputs, reconstructions = [], []
     for sample_idx in samples_indices:
         img, target = data[sample_idx]
         img_hat = reconstruction_fn(img[None]).squeeze(0)
-        imgs.append(img)
+        inputs.append(img)
         reconstructions.append(img_hat)
 
-    display_data_samples(data=imgs, reconstructions=reconstructions)
+    display_data_samples(data=reconstructions, target=inputs)
