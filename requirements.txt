@@ -3,6 +3,7 @@ jupyterlab
 jupyter
 torch
 torchvision
+torchinfo
 tqdm
 numpy
 matplotlib
@@ -10,3 +11,4 @@ holoviews[recommended]
 
 # cardiac-mri-autoencoders
 h5py
+pytorch-lightning
