@@ -44,7 +44,7 @@ def explore_latent_space(
         targets.extend(target.cpu().detach().numpy())
     encodings = np.array(encodings)
     targets = np.array(targets)[:, None]
-    encoded_points = hv.Points(np.hstack((encodings, targets)), vdims=["target"]).opts(
+    encoded_points = hv.Points(np.hstack((encodings, targets)), label="Latent space", vdims=["target"]).opts(
         color="target", cmap="Category10", colorbar=True
     )
 
@@ -55,9 +55,10 @@ def explore_latent_space(
     def decode_point(x, y) -> hv.Image:
         point_tensor = torch.tensor([x, y], device=device)
         decoded_point = decoder(point_tensor[None]).reshape(shape).squeeze(dim=0)
-        return hv.Image(decoded_point.cpu().detach().numpy(), bounds=(-1, -1, 1, 1))
+        return hv.Image(decoded_point.cpu().detach().numpy(), label="Decoder output", bounds=(-1, -1, 1, 1))
 
     decoded_point = hv.DynamicMap(decode_point, streams=[pointer])
+    decoded_point.relabel("Area Chart")
 
     # Common options for the main panels to display
     axis_opts = {"xaxis": None, "yaxis": None}

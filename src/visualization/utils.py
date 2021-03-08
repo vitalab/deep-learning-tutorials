@@ -42,11 +42,11 @@ def display_data_samples(
 
     for sample_idx in range(num_samples):
         # Display data on the top row
-        _display_sample(data[sample_idx], sample_idx + 1, "data")
+        _display_sample(data[sample_idx], sample_idx + 1, "Input data")
 
         if target is not None:
             # Display target on the bottom row
-            _display_sample(target[sample_idx], sample_idx + 1 + num_samples, "target")
+            _display_sample(target[sample_idx], sample_idx + 1 + num_samples, "Output data")
 
     fig.tight_layout()
     plt.show()
