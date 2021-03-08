@@ -1,7 +1,7 @@
+import random
 from typing import Callable, Sequence, Union
 
 import matplotlib.pyplot as plt
-import numpy as np
 from matplotlib.axes import Axes
 from torch import Tensor
 from torchvision.datasets import VisionDataset
@@ -18,12 +18,15 @@ def _hide_axis(ax: Axes, hide_ticks: bool = True, hide_ticklabels: bool = True) 
         yaxis.set_ticklabels([])
 
 
-def display_data_samples(
-    data: Union[Tensor, Sequence[Tensor]],
-    target: Union[Tensor, Sequence[Tensor]] = None,
-) -> None:
-    num_samples = len(data)
-    fig, axes = plt.subplots(figsize=(20, 4), nrows=1 + bool(target is not None), ncols=num_samples)
+def display_data_samples(**data_samples: Union[Tensor, Sequence[Tensor]]) -> None:
+    num_samples_by_src = {src_name: len(samples) for src_name, samples in data_samples.items()}
+    num_samples = random.choice(list(num_samples_by_src.values()))
+    if not all(src_num_samples == num_samples for src_num_samples in num_samples_by_src.values()):
+        raise ValueError(
+            f"`display_data_samples` requires all data sources to provide the same number of (corresponding) samples. "
+            f"You provided the following data sources (with the number of samples for each one): {num_samples_by_src}."
+        )
+    fig, axes = plt.subplots(figsize=(20, 4), nrows=len(data_samples), ncols=num_samples)
 
     def _display_sample(sample: Tensor, ax_idx: int, sample_label: str) -> None:
         ax = plt.subplot(2, num_samples, ax_idx)
@@ -40,13 +43,12 @@ def display_data_samples(
         plt.gray()
         _hide_axis(ax)
 
+    # For each column
     for sample_idx in range(num_samples):
-        # Display data on the top row
-        _display_sample(data[sample_idx], sample_idx + 1, "data")
 
-        if target is not None:
-            # Display target on the bottom row
-            _display_sample(target[sample_idx], sample_idx + 1 + num_samples, "target")
+        # Display the sample for the current column from each data source
+        for src_idx, (src_name, samples) in enumerate(data_samples.items()):
+            _display_sample(samples[sample_idx], sample_idx + 1 + (src_idx * num_samples), src_name)
 
     fig.tight_layout()
     plt.show()
@@ -55,7 +57,7 @@ def display_data_samples(
 def display_autoencoder_results(
     data: VisionDataset, reconstruction_fn: Callable[[Tensor], Tensor], num_samples: int = 10
 ) -> None:
-    samples_indices = np.random.randint(len(data), size=num_samples)
+    samples_indices = random.sample(range(len(data)), num_samples)
     inputs, reconstructions = [], []
     for sample_idx in samples_indices:
         img, target = data[sample_idx]
@@ -63,4 +65,4 @@ def display_autoencoder_results(
         inputs.append(img)
         reconstructions.append(img_hat)
 
-    display_data_samples(data=reconstructions, target=inputs)
+    display_data_samples(data=inputs, reconstruction=reconstructions)
