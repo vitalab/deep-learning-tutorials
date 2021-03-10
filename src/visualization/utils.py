@@ -55,14 +55,18 @@ def display_data_samples(**data_samples: Union[Tensor, Sequence[Tensor]]) -> Non
 
 
 def display_autoencoder_results(
-    data: VisionDataset, reconstruction_fn: Callable[[Tensor], Tensor], num_samples: int = 10
+    data: VisionDataset,
+    reconstruction_fn: Callable[[Tensor], Tensor],
+    num_samples: int = 10,
+    reconstruct_target: bool = False,
 ) -> None:
     samples_indices = random.sample(range(len(data)), num_samples)
     inputs, reconstructions = [], []
     for sample_idx in samples_indices:
         img, target = data[sample_idx]
-        img_hat = reconstruction_fn(img[None]).squeeze(0)
-        inputs.append(img)
-        reconstructions.append(img_hat)
+        x = img if not reconstruct_target else target
+        x_hat = reconstruction_fn(x[None]).squeeze(0)
+        inputs.append(x)
+        reconstructions.append(x_hat)
 
     display_data_samples(data=inputs, reconstruction=reconstructions)
