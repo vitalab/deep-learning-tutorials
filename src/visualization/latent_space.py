@@ -63,4 +63,6 @@ def explore_latent_space(
 
     # Common options for the main panels to display
     axis_opts = {"xaxis": None, "yaxis": None}
-    return encoded_points.opts(**axis_opts, width=600, height=600) + decoded_point.opts(**axis_opts, cmap="gray")
+    return encoded_points.opts(**axis_opts, width=600, height=600, title="Latent space") + decoded_point.opts(
+        **axis_opts, cmap="gray", title="Decoded sample"
+    )
