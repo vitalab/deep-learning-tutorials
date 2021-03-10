@@ -21,16 +21,6 @@ pip install -e .
 ```
 
 
-### Installing Jupyter Widgets
-To get some interactive features, e.g. progress bars, to display properly in JupyterLab, you also need to install
-and/or activate the required widgets, by following the instructions below:
-```shell script
-# Setup ipywidgets to work with JupyterLab
-jupyter nbextension enable --py widgetsnbextension
-jupyter labextension install @jupyter-widgets/jupyterlab-manager
-```
-
-
 ## How to Run
 Once you've went through the [setup](#setup) instructions above, you can start exploring the tutorial's notebooks.
 We recommend using JupyterLab to run the notebooks, which can be launched by running (from within your environment):
