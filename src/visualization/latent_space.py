@@ -3,7 +3,7 @@ from typing import Literal
 import holoviews as hv
 import numpy as np
 import torch
-from holoviews import streams
+from holoviews import opts, streams
 from panel.layout import Panel
 from torch import nn
 from torch.utils.data import DataLoader
@@ -52,17 +52,14 @@ def explore_latent_space(
     pointer = streams.PointerXY(x=0.0, y=0.0, source=encoded_points)
 
     # Setup callbacks to automatically decode selected points
-    bounds = (-17, -22, 26, 16)  # Hardcoded axis limits so that decoded point is displayed at a decent resolution
-
     def decode_point(x, y) -> hv.Image:
         point_tensor = torch.tensor([x, y], device=device)
-        decoded_point = decoder(point_tensor[None]).reshape(shape).squeeze(dim=0)
-        return hv.Image(decoded_point.cpu().detach().numpy(), bounds=bounds)
+        decoded_img = decoder(point_tensor[None]).reshape(shape).squeeze(dim=0)
+        return hv.Image(decoded_img.cpu().detach().numpy())
 
-    decoded_point = hv.DynamicMap(decode_point, streams=[pointer])
+    decoded_point = hv.DynamicMap(decode_point, streams=[pointer]).opts(opts.Image(axiswise=True))
 
     # Common options for the main panels to display
-    axis_opts = {"xaxis": None, "yaxis": None}
-    return encoded_points.opts(**axis_opts, width=600, height=600, title="Latent space") + decoded_point.opts(
-        **axis_opts, cmap="gray", title="Decoded sample"
+    return encoded_points.opts(width=600, height=600, title="Latent space") + decoded_point.opts(
+        xaxis=None, yaxis=None, cmap="gray", title="Decoded sample"
     )
