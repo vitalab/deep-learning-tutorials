@@ -26,7 +26,7 @@ def explore_latent_space(
     encoder.eval()
     decoder.eval()
 
-    # Inspect the a data sample's shape
+    # Inspect the data's shape
     shape = data[0][0].shape
 
     # Encode the dataset
@@ -52,15 +52,15 @@ def explore_latent_space(
     pointer = streams.PointerXY(x=0.0, y=0.0, source=encoded_points)
 
     # Setup callbacks to automatically decode selected points
+    bounds = (-17, -22, 26, 16)  # Hardcoded axis limits so that decoded point is displayed at a decent resolution
+
     def decode_point(x, y) -> hv.Image:
         point_tensor = torch.tensor([x, y], device=device)
         decoded_point = decoder(point_tensor[None]).reshape(shape).squeeze(dim=0)
-        return hv.Image(decoded_point.cpu().detach().numpy(), bounds=(-1, -1, 1, 1))
+        return hv.Image(decoded_point.cpu().detach().numpy(), bounds=bounds)
 
     decoded_point = hv.DynamicMap(decode_point, streams=[pointer])
 
     # Common options for the main panels to display
     axis_opts = {"xaxis": None, "yaxis": None}
-    return encoded_points.opts(**axis_opts, width=600, height=600) + decoded_point.opts(
-        **axis_opts, width=300, height=300
-    )
+    return encoded_points.opts(**axis_opts, width=600, height=600) + decoded_point.opts(**axis_opts, cmap="gray")
