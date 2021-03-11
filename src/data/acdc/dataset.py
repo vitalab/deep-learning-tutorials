@@ -1,4 +1,4 @@
-from typing import Callable, List, Literal, Tuple
+from typing import Callable, List, Tuple
 
 import h5py
 from torchvision.datasets import VisionDataset
@@ -12,7 +12,7 @@ class Acdc(VisionDataset):
 
     Args:
         path: Path to the HDF5 dataset.
-        image_set: select the subset of images to use from the enumeration.
+        image_set: One of "train", "val" or "test", indicating the subset of images to use.
         transform: a function/transform that takes in a numpy array and returns a transformed version.
         target_transform: a function/transform that takes in the target and transforms it.
     """
@@ -20,7 +20,7 @@ class Acdc(VisionDataset):
     def __init__(
         self,
         path: str,
-        image_set: Literal["train", "val", "test"],
+        image_set: str,
         transform: Callable = None,
         target_transform: Callable = None,
     ):
@@ -43,13 +43,13 @@ class Acdc(VisionDataset):
     def __len__(self):  # noqa: D105
         return len(self.item_list)
 
-    def list_groups(self, level: Literal["patient", "instant"] = "instant") -> List[str]:
+    def list_groups(self, level: str = "instant") -> List[str]:
         """Lists the paths of the different levels of groups/clusters data samples in ``self.image_set`` can belong to.
 
         Args:
-            level: Hierarchical level at which to group data samples.
-                - 'patient': all the data from the same patient is associated to a unique ID.
-                - 'instant': all the data from the same instant of a patient is associated to a unique ID.
+            level: One of "patient" or "instant", indicating the hierarchical level at which to group data samples.
+                - "patient": all the data from the same patient is associated to a unique ID.
+                - "instant": all the data from the same instant of a patient is associated to a unique ID.
 
         Returns:
             IDs of the different levels of groups/clusters data samples in ``self.image_set`` can belong to.

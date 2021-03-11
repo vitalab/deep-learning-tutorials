@@ -1,5 +1,3 @@
-from typing import Literal
-
 import holoviews as hv
 import numpy as np
 import torch
@@ -16,10 +14,24 @@ def explore_latent_space(
     data: VisionDataset,
     encoder: nn.Module,
     decoder: nn.Module,
-    ae_type: Literal["ae", "vae"] = "vae",
+    ae_type: str = "vae",
     device: str = "cuda",
     batch_size: int = 256,
 ) -> Panel:
+    """Generates panel to interactively visualize an autoencoder's latent space distribution and individual samples.
+
+    Args:
+        data:
+        encoder: Neural net that predicts a latent vector, or latent mean and variance vectors.
+        decoder: Neural net that projects a point in the latent space back into the image space.
+        ae_type: One of "ae" or "vae". Flag that indicates what type of autoencoder the encoder and decoder come from,
+            so that we can know how to interpret the nets' outputs.
+        device: Device on which to perform the neural nets' computations.
+        batch_size: Size of the batch to use when initially encoding the dataset's items in the latent space.
+
+    Returns:
+        Interactive panel to interactively visualize the autoencoder's latent space distribution and individual samples.
+    """
     # Ensure modules are on the requested device and in inference mode
     encoder = encoder.to(device)
     decoder = decoder.to(device)

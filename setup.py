@@ -8,7 +8,7 @@ from setuptools import find_packages, setup
 # https://packaging.python.org/guides/single-sourcing-package-version/
 # http://blog.ionelmc.ro/2014/05/25/python-packaging/
 PATH_ROOT = pathlib.Path(__file__).parent
-builtins.__VITAL_SETUP__ = True
+builtins.__DEEP_LEARNING_TUTORIALS_SETUP__ = True
 
 
 def load_requirements(path_dir=PATH_ROOT, file_name="requirements.txt", comment_char="#"):  # noqa: D103
@@ -58,7 +58,7 @@ setup(
     packages=find_packages(),
     long_description=load_long_description(),
     long_description_content_type="text/markdown",
-    python_requires=">=3.8",
+    python_requires=">=3.6",
     setup_requires=[],
     install_requires=load_requirements(),
     extras_require=extras,
