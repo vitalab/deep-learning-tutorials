@@ -1,4 +1,4 @@
-# Deep Learning Tutorials
+# Auto-encoder Tutorials
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Setup
@@ -37,6 +37,7 @@ When you've launched JupyterLab's web interface, you can simply navigate to any 
 - [Basic Variational Autoencoders](tutorials/mnist-autoencoders.ipynb)
 - [Variational Autoencoders Applied to Cardiac MRI](tutorials/cardiac-mri-autoencoders.ipynb)
 
+You may download the MNIST and ACDC datasets [here](http://info.usherbrooke.ca/pmjodoin/projects/data.tar.gz).  Once downloaded, you may untar the file and copy the **data/** folder in the root of your code, at the same level than the **src/** and the **tutorials/** folders.
 
 ## How to Contribute
 If you want to contribute to the project, then you have to install development dependencies and pre-commit hooks, on
