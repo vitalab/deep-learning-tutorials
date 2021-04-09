@@ -4,7 +4,7 @@
 ## Setup
 
 ### Virtual Environment
-If you don't operate inside a virtual environment, or only have access to an incompatible python version (<3.8), it is
+If you don't operate inside a virtual environment, or only have access to an incompatible python version (<3.6), it is
 recommended you create a virtual environment using [`conda`](https://docs.conda.io/en/latest/):
 ```shell script
 conda env create -f environment.yml
