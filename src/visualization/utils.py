@@ -30,7 +30,7 @@ def display_data_samples(**data_samples: Union[Tensor, Sequence[Tensor]]) -> Non
 
     def _display_sample(sample: Tensor, ax_idx: int, sample_label: str) -> None:
         ax = plt.subplot(2, num_samples, ax_idx)
-        if ax.is_first_col():
+        if ax.get_subplotspec().is_first_col():
             ax.set_ylabel(sample_label, size="xx-large")
         if sample.ndim == 3 and sample.shape[0] == 1:
             sample = sample.squeeze(dim=0)
@@ -45,7 +45,6 @@ def display_data_samples(**data_samples: Union[Tensor, Sequence[Tensor]]) -> Non
 
     # For each column
     for sample_idx in range(num_samples):
-
         # Display the sample for the current column from each data source
         for src_idx, (src_name, samples) in enumerate(data_samples.items()):
             _display_sample(samples[sample_idx], sample_idx + 1 + (src_idx * num_samples), src_name)
