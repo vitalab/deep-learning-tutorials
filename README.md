@@ -37,7 +37,10 @@ When you've launched JupyterLab's web interface, you can simply navigate to any 
 - [Basic Variational Autoencoders](tutorials/mnist-autoencoders.ipynb)
 - [Variational Autoencoders Applied to Cardiac MRI](tutorials/cardiac-mri-autoencoders.ipynb)
 
-You may download the MNIST and ACDC datasets [here](http://info.usherbrooke.ca/pmjodoin/projects/data.tar.gz).  Once downloaded, you may untar the file and copy the **data/** folder in the root of your code, at the same level than the **src/** and the **tutorials/** folders.
+You may download the MNIST and ACDC datasets [here](https://drive.google.com/file/d/1H5pTOYjcSFR6B5GhA0sEPW0wgPVfBq8S/view?usp=sharing).  Once downloaded, you may untar the file and copy the **data/** folder in the root of your code, at the same level than the **src/** and the **tutorials/** folders.
+```
+tar -xvzf data.tar.gz
+```
 
 ## How to Contribute
 If you want to contribute to the project, then you have to install development dependencies and pre-commit hooks, on
