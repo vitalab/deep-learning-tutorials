@@ -37,8 +37,13 @@ When you've launched JupyterLab's web interface, you can simply navigate to any 
 - [Basic Variational Autoencoders](tutorials/mnist-autoencoders.ipynb)
 - [Variational Autoencoders Applied to Cardiac MRI](tutorials/cardiac-mri-autoencoders.ipynb)
 
-You may download the MNIST and ACDC datasets [here](https://drive.google.com/file/d/1H5pTOYjcSFR6B5GhA0sEPW0wgPVfBq8S/view?usp=sharing).  Once downloaded, you may untar the file and copy the **data/** folder in the root of your code, at the same level than the **src/** and the **tutorials/** folders.
+The datasets used in this tutorial (MNIST and ACDC) will automatically be downloaded at the beginning of the notebooks.
+However, if you experience issues with the download and want to download the datasets, you can find them [here](https://drive.google.com/file/d/1H5pTOYjcSFR6B5GhA0sEPW0wgPVfBq8S/view?usp=sharing) or download it with the following command:
+```shell script
+gdown https://drive.google.com/uc?id=1H5pTOYjcSFR6B5GhA0sEPW0wgPVfBq8S -c -O data.tar.gz
 ```
+Once downloaded, you may untar the file and and copy the `data/` folder at the root of the project, i.e. at the same level as the `src/` and the `tutorials/` folders.
+```shell script
 tar -xvzf data.tar.gz
 ```
 
