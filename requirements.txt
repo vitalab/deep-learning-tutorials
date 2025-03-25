@@ -13,4 +13,3 @@ umap-learn
 
 # cardiac-mri-autoencoders
 h5py
-torchmetrics
