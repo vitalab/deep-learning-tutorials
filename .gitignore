@@ -105,3 +105,7 @@ venv.bak/
 
 # IDEs
 .idea
+
+# Project data
+data.tar.gz
+/data/
