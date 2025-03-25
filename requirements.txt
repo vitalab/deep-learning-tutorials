@@ -1,13 +1,14 @@
 # Base requirements
+gdown
+holoviews[recommended]
 jupyterlab
 jupyter
-torch
-torchvision
-torchinfo
-tqdm
-numpy
 matplotlib
-holoviews[recommended]
+numpy
+torch
+torchinfo
+torchvision
+tqdm
 umap-learn
 
 # cardiac-mri-autoencoders
