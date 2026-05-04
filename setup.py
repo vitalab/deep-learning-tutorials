@@ -55,11 +55,11 @@ setup(
     author="Nathan Painchaud <nathan.painchaud@usherbrooke.ca>, Pierre-Marc Jodoin <pierre-marc.jodoin@usherbrooke.ca>",
     url="https://github.com/vitalab/deep-learning-tutorials",
     license="MIT",
-    packages=find_packages(),
+    # packages=find_packages(),
     long_description=load_long_description(),
     long_description_content_type="text/markdown",
     python_requires=">=3.8",
     setup_requires=[],
-    install_requires=load_requirements(),
+    # install_requires=load_requirements(),
     extras_require=extras,
 )
