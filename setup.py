@@ -3,7 +3,7 @@ import builtins
 import os
 import pathlib
 
-from setuptools import find_packages, setup
+from setuptools import setup
 
 # https://packaging.python.org/guides/single-sourcing-package-version/
 # http://blog.ionelmc.ro/2014/05/25/python-packaging/
