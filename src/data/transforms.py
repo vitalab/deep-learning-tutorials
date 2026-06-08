@@ -4,7 +4,7 @@ import torchvision.transforms.functional as F
 
 
 class NormalizeSample(torch.nn.Module):
-    """Normalize a tensor image w.r.t. to its mean and standard deviation.
+    """Normalize a tensor image with respect to its mean and standard deviation.
 
     Args:
         inplace: Whether to make this operation in-place.

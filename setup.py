@@ -58,7 +58,7 @@ setup(
     packages=find_packages(),
     long_description=load_long_description(),
     long_description_content_type="text/markdown",
-    python_requires=">=3.8",
+    python_requires=">=3.10",
     setup_requires=[],
     install_requires=load_requirements(),
     extras_require=extras,
