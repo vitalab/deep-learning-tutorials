@@ -3,7 +3,7 @@ default_language_version:
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+    rev: v6.0.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
@@ -19,27 +19,25 @@ repos:
 
   # python linting and code formatting
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.11.0
+    rev: v0.15.0
     hooks:
-      - id: ruff
+      - id: ruff-check
         args: [--fix]
       - id: ruff-format
 
   # jupyter notebook cell output clearing
   - repo: https://github.com/kynan/nbstripout
-    rev: 0.8.1
+    rev: 0.9.1
     hooks:
       - id: nbstripout
 
   # md formatting
   - repo: https://github.com/hukkin/mdformat
-    rev: 0.7.22
+    rev: 1.0.0
     hooks:
       - id: mdformat
         args: ["--number"]
         additional_dependencies:
           - mdformat-gfm
-          - mdformat-frontmatter
           - mdformat-footnote
           - mdformat-gfm-alerts
-          - mdformat-tables
