@@ -9,6 +9,16 @@ from torch.utils.data import DataLoader
 from torchvision.datasets import VisionDataset
 
 
+def _letter_label(i: int) -> str:
+    """Map a 0-based index to a spreadsheet-style letter label (0->A, 25->Z, 26->AA, ...)."""
+    label = ""
+    i += 1
+    while i > 0:
+        i, rem = divmod(i - 1, 26)
+        label = chr(ord("A") + rem) + label
+    return label
+
+
 def plot_latent_space_with_decodings(
     data: VisionDataset,
     encode_fn: Callable[[Tensor], Tensor],
@@ -32,7 +42,7 @@ def plot_latent_space_with_decodings(
     The latent space is shown on the left (projected to 2D with UMAP if it has more than 2
     dimensions). If ``decode_fn`` is given, ``n_decode`` random points are drawn from within the
     spread of the real encodings, decoded, and shown in a square grid on the right. Each sampled
-    point is overlaid on the scatter and numbered/colored to match its decoded image, so you can
+    point is overlaid on the scatter and lettered/colored to match its decoded image, so you can
     read off "this region of the map decodes to this".
 
     Sampling happens in the *displayed* 2D space and is mapped back to the latent space via UMAP's
@@ -162,13 +172,14 @@ def plot_latent_space_with_decodings(
     if sampled_2d is not None:
         for i in range(n_decode):
             color = sample_colors(i)
+            label = _letter_label(i)
 
             ax_latent.scatter(
                 sampled_2d[i, 0], sampled_2d[i, 1],
                 s=220, marker="*", color=color, edgecolors="black", linewidths=1.2, zorder=5,
             )
             ax_latent.annotate(
-                str(i + 1), (sampled_2d[i, 0], sampled_2d[i, 1]),
+                label, (sampled_2d[i, 0], sampled_2d[i, 1]),
                 textcoords="offset points", xytext=(6, 6), fontsize=9, fontweight="bold",
                 color="black", zorder=6,
             )
@@ -180,7 +191,7 @@ def plot_latent_space_with_decodings(
             ax_img.imshow(img, cmap=image_cmap)
             ax_img.set_xticks([])
             ax_img.set_yticks([])
-            ax_img.set_title(f"#{i + 1}", color=color, fontsize=10, fontweight="bold")
+            ax_img.set_title(label, color=color, fontsize=10, fontweight="bold")
             for spine in ax_img.spines.values():
                 spine.set_color(color)
                 spine.set_linewidth(3)
