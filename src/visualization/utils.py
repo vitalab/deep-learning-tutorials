@@ -7,7 +7,7 @@ from torch import Tensor
 from torchvision.datasets import VisionDataset
 
 
-def _hide_axis(ax: Axes, hide_ticks: bool = True, hide_ticklabels: bool = True) -> None:
+def hide_axis(ax: Axes, hide_ticks: bool = True, hide_ticklabels: bool = True) -> None:
     xaxis = ax.get_xaxis()
     yaxis = ax.get_yaxis()
     if hide_ticks:
@@ -41,7 +41,7 @@ def display_data_samples(**data_samples: Union[Tensor, Sequence[Tensor]]) -> Non
             )
         plt.imshow(sample.detach().cpu().numpy())
         plt.gray()
-        _hide_axis(ax)
+        hide_axis(ax)
 
     # For each column
     for sample_idx in range(num_samples):
